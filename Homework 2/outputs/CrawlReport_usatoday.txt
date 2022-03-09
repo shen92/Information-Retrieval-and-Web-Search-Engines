@@ -1,0 +1,38 @@
+Name: Yingjie Shen
+USC ID: 4756454466
+News site crawled: usatoday.com
+Number of threads: 7
+
+Fetch Statistics
+================
+# fetches attempted: 20000
+# fetches succeeded: 18706
+# fetches failed or aborted: 1294
+
+Outgoing URLs:
+==============
+Total URLs extracted: 2437643
+# unique URLs extracted: 860049
+# unique URLs within News Site: 663574
+# unique URLs outside News Site: 196475
+
+Status Codes:
+===========
+200 OK: 18706
+301 Moved Permanently: 743
+302 Moved Temporarily: 533
+307 Temporary Redirect: 3
+500 Internal Server Error: 9
+502 Bad Gateway: 6
+
+File Sizes:
+===========
+< 1KB: 0
+1KB ~ <10KB: 1
+10KB ~ <100KB: 408
+100KB ~ <1MB: 18103
+>= 1MB: 1
+
+Content Types:
+==============
+text/html: 18513
