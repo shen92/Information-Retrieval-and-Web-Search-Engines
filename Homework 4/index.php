@@ -72,19 +72,19 @@ if ($query) {
 			<input type="submit" />
 		</div>
 		<div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 2vw; margin-top: 2vh;">
-			<div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+			<label>
 				<input type="radio" checked name="ranking" value="lucene" <?php
 																																	if (isset($_REQUEST['ranking']) && $_REQUEST['ranking'] == 'lucene') {
 																																		echo 'checked="checked"';
 																																	} ?>>
-				<label>Lucene</label>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+				Lucene
+			</label>
+			<label>
 				<input type="radio" name="ranking" value="pagerank" <?php if (isset($_REQUEST['ranking']) && $_REQUEST['ranking'] == 'pagerank') {
 																															echo 'checked="checked"';
 																														} ?>>
-				<label>PageRank</label>
-			</div>
+				PageRank
+			</label>
 		</div>
 	</form>
 
@@ -100,34 +100,38 @@ if ($query) {
 		<ol>
 			<?php
 			// iterate result documents
+			$dataFolder = "/Users/syjack1997/Downloads/";
+			$urlMap = array_map('str_getcsv', file($dataFolder . 'URLtoHTML_latimes_news.csv'));
+
 			foreach ($results->response->docs as $doc) {
-				$id = $doc->id;
 				$title = $doc->title;
 				$url = $doc->og_url;
+				$id = $doc->id;
 				$description = $doc->og_description;
-
-				if ($description == "" || $description == null) {
-					$description = "N/A";
-				}
 
 				if ($title == "" || $title == null) {
 					$title = "N/A";
 				}
 
+				if ($url == "" || $url == null) {
+					foreach ($urlMap as $row) {
+						$crawledFile = $dataFolder . "latimes/" . $row[0];
+						if ($id == $crawledFile) {
+							$url = $row[1];
+							unset($row);
+							break;
+						}
+					}
+				}
+
+				if ($description == "" || $description == null) {
+					$description = "N/A";
+				}
 			?>
 				<li>
 					<div style="border: 1px solid black; padding: 1.5vh 1vw; margin-top:-1px">
-						<div>Title: <span class="result"><?php echo "<a href = '$url'>$title</a>" ?></span></div>
-						<div>URL:
-							<span class="result">
-								<?php
-								if ($url == "" || $url == null) {
-									echo "N/A";
-								} else {
-									echo "<a href = '$url'>$url</a>";
-								} ?>
-							</span>
-						</div>
+						<div>Title: <span class="result"><?php echo "<a href = '$url' target='_blank'>$title</a>" ?></span></div>
+						<div>URL: <span class="result"><?php echo "<a href='$url' target='_blank'>$url</a>"; ?></span></div>
 						<div>ID: <span class="result"><?php echo $id; ?></span></div>
 						<div>Description: <span class="result"><?php echo $description; ?></span></div>
 					</div>
